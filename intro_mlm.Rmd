@@ -6,7 +6,7 @@ date: "2018/11/27"
 output:
   xaringan::moon_reader:
     mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
-    css: [default, metropolis, metropolis-fonts, slide-font.css]
+    css: [metropolis-fonts, slide-font.css, default, metropolis]
     lib_dir: libs
     chakra: libs/remark-latest.min.js
     nature:

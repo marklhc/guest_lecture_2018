@@ -177,6 +177,11 @@ popdata %>% sjlabelled::remove_all_labels() %>%
                       "smooth", position = "jitter", size = 0.7)))
 ```
 
+???
+
+Girls are more popular; popularity related to both extraversion and teacher
+experience
+
 ---
 
 class: clear
@@ -234,6 +239,11 @@ m0 <- lmer(popular ~ (1 | class), data = popdata)
 What does that mean?
 ]
 
+???
+
+36.5% variance of `popular` is at class level. Also, the average correlation of
+the popularity score of two students is .365
+
 ---
 
 # Dependent (Correlated) Observations
@@ -247,6 +257,10 @@ Overlap: reduces effective information (\\(N_\text{eff}\\)) in data
 .center[
 ![](images/overlap_circles2.png)
 ]
+
+???
+
+Two students in the same class give less than two pieces of information
 
 ---
 
@@ -656,7 +670,7 @@ Student-level coefficient: $\hat \gamma_{10}$ =
 class: clear
 
 .font90[
-Contextual effect: $\hat \gamma_{10} - \hat \gamma_{01}$ = 
+Contextual effect: $\hat \gamma_{01} - \hat \gamma_{10}$ = 
 `r get_posterior_mean(m3_stan, par = "b_contextual")[3]`, 
 95% CI [`r summary(m3_stan, probs = .025, pars = "b_contextual")$summary[4]`, 
 `r summary(m3_stan, probs = .975, pars = "b_contextual")$summary[4]`]

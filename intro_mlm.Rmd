@@ -38,17 +38,29 @@ BibOptions(check.entries = FALSE,
            hyperlink = FALSE, 
            dashed = FALSE)
 myBib <- ReadBib("../references.bib", check = FALSE)
+Citeps <- function(bib, ..., before = NULL, after = NULL, .opts = list(), 
+                   tag = ".font60") {
+  paste0(tag, "[", Citep(bib, ..., before = before, after = after, 
+                         .opts = .opts), "]")
+}
 ```
 
 # Different Names
 
-Hierarchical linear model `r Citep(myBib, "Raudenbush2002", before = "HLM; ")`
+Hierarchical linear model `r Citeps(myBib, "Raudenbush2002", before = "HLM; ")`
 
-Mixed/Mixed-effects model `r Citep(myBib, "littell1996sas")`
+Mixed/Mixed-effects model `r Citeps(myBib, "littell1996sas")`
 
-Random coefficient model `r Citep(myBib, "DeLeeuw1986")`
+Random coefficient model .font60[(de Leeuw and Kreft, 1986)]`r NoCite(myBib, "DeLeeuw1986")`
 
-Variance component model `r Citep(myBib, "Aitkin1986")`
+Variance component model `r Citeps(myBib, "Aitkin1986")`
+
+
+???
+
+Ask them to introduce themselves and what research they are interested in
+
+Like a lot of terminologies in statistics
 
 ---
 
@@ -73,6 +85,8 @@ Nested Data
 
 ![](images/students_in_schools.png)
 
+???
+What other examples can you think about?
 ---
 
 # Multilevel Data
@@ -106,6 +120,9 @@ digraph boxes_and_circles {
 ")
 ```
 
+???
+Nesting: multiple units belongs to the same higher-level unit
+Level-1: lowest level; Level-2: the next level
 ---
 
 # Applications of MLM
@@ -178,6 +195,7 @@ popdata %>% sjlabelled::remove_all_labels() %>%
 ```
 
 ???
+Exaplain the graph, and ask for their observations
 
 Girls are more popular; popularity related to both extraversion and teacher
 experience
@@ -188,6 +206,9 @@ class: clear
 
 ![](images/overlap_circles.png)
 
+???
+Have you learned what the independent observation assumption is? When I first
+learn regression, I don't really know what it means until I learn MLM
 ---
 
 # Quantify Clustering
@@ -200,7 +221,9 @@ ICC = prop. var at cluster level
     = average correlation between two individuals in the same cluster
     
 Variance components: $\sigma^2_\text{cluster}$, $\sigma^2_\text{individual}$
-    
+
+???
+What does the formula looks like? $R^2$
 ---
 
 class: clear
@@ -241,6 +264,8 @@ What does that mean?
 
 ???
 
+Graph: within and between variance
+
 36.5% variance of `popular` is at class level. Also, the average correlation of
 the popularity score of two students is .365
 
@@ -271,6 +296,8 @@ Assuming independent obs, OLS understates the uncertainty in the estimates
 
 $${\uparrow}\, t = \frac{\hat\beta}{\mathit{SE}(\hat \beta)\, \downarrow}$$
 
+???
+What's the consequence of an inflated test statistic?
 ---
 
 # Comparing OLS with MLM
@@ -327,6 +354,8 @@ MLM:
         `r confint(m1, parm = "texp")[2] %>% format_coef`]. 
 ]
 
+???
+Understate the uncertainty in the slopes
 ---
 
 # Type I Error Inflation
@@ -337,6 +366,10 @@ Depends on _design effect_: 1 + (cluster size - 1) × ICC
 
 What's the design effect for the popularity data?
 
+???
+ICC of .20, _n_ = 25, $\alpha$ inflated from .05 to .50
+
+Give time to calculate the design effect
 ---
 
 class: clear
@@ -388,6 +421,8 @@ p + geom_point(data = popdata %>% filter(class == 1),
                 fullrange = TRUE)
 ```
 
+???
+Ask them to point out where $\beta_0$, $\beta_1$, and $e_i$ are
 ---
 
 # Think About Just One Classroom
@@ -467,6 +502,8 @@ line
 
 ???
 
+Which one should you trust more?
+
 Get more stable estimates of regression lines
 
 ---
@@ -501,6 +538,8 @@ ggplot(data = predict_ran_slp,
 ```
 ]
 
+???
+What's the difference in the individual slopes across the two graphs?
 ---
 
 class:clear
@@ -521,6 +560,8 @@ Random effects
 - $u_{1j}$: $\beta_{1j} - \gamma_{10}$
 ]
 
+???
+Maybe write out the model
 ---
 
 # Fixed Effect Estimates
@@ -531,6 +572,8 @@ Random effects
 ```
 ]
 
+???
+Maybe do a software demo at this point
 ---
 
 # Random Effect __Variance__ Estimates
@@ -554,7 +597,7 @@ ranef(m2s)$class
 class: clear
 
 Heterogeneity in the slopes: OLS gives underestimated _SE_ of the average
-slope `r Citep(myBib, "Lai2015")`
+slope `r Citeps(myBib, "Lai2015")`
 
 Falsely assuming constant slopes across groups
 - Heterogeneity in slopes can be an important research question
@@ -576,6 +619,8 @@ ggplot(data = predict_ran_slp,
 ```
 
 ???
+
+When there is heterogeneity, the next step is to ask what can account for that
 
 What do you observe from the graph?
 
@@ -608,6 +653,8 @@ ggplot(popdata, aes(x = extravc, y = popular, col = factor(class))) +
               size = 1.5, col = "red") + 
   guides(col = FALSE, fill = FALSE)
 ```
+
+# The third reason of using MLM
 
 ---
 
@@ -685,6 +732,8 @@ Contextual effect: $\hat \gamma_{01} - \hat \gamma_{10}$ =
 [1] With Bayesian estimation
 ]
 
+???
+Explain what a contextual effect is
 ---
 
 # Growth Curve Analysis
@@ -698,6 +747,8 @@ tolerance %>%
   geom_line()
 ```
 
+???
+Find the overall trajectory and the variations around the overall trajectory
 ---
 
 # Other Forms of Clustering
